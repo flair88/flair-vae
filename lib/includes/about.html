@@ -1,0 +1,17 @@
+<? if( !$_REQUEST['ajax'] ): ?>
+	<? if((string)$page->banner): ?>
+	  <div id="pageHeader" class="col12"><img src="<? echo vae_data_url().vae_sizedimage($page->banner, 'Banner'); ?>" alt="<? echo $page->title; ?>" /></div>
+	<? else: ?>
+
+	<? endif; ?>
+<? endif; ?>
+
+<div id="primeContent" class="col5plus">
+  <div class="inside">
+  	<h2><? echo $page->headline; ?></h2>
+  	<? if(!empty($page->image)): ?>
+  	  <div class="pagePic"><img src="<? echo vae_data_url().vae_sizedimage($page->image, 'Image'); ?>"  alt="<? echo $page->title; ?>" /></div>
+  	<? endif; ?>
+  	<? echo nl2br($page->text); ?>
+  </div>
+</div>

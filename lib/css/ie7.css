@@ -1,0 +1,36 @@
+address { font-style: normal;}
+
+
+/* Sub Navigation 
+-------------------------------------------------*/
+#nav li ul { top: 21px;}
+#nav li ul li { margin-right: 15px;}
+
+
+/* Product Detail Pg
+-------------------------------------------------*/
+.productContent p { clear: both; margin: 11px 0 15px;}
+.productAdd .price { margin-top: 2px;}
+.productSpecs { clear: both; margin-bottom: 15px;}
+
+#productTools { margin: 20px 0 0;}
+
+
+/* Cart Detail Pg
+-------------------------------------------------*/
+#cartBox .quantityAdjust ul { position: relative;}
+#cartBox .quantityAdjust ul li { position: absolute; left: 0px;}
+#cartBox .quantityAdjust ul li.subtract { bottom:-4px;}
+#checkout #cartBox ul li { margin-bottom: 16px;}
+
+
+/* Checkout Pg
+-------------------------------------------------*/
+#checkout #cartBox { padding-bottom: 20px;}
+#checkout #orderSubmit button { left: 0px; line-height: 44px; width: 302px;}
+
+
+/* Register Pg / Contact Pg
+-------------------------------------------------*/
+#register #cartTools li.proceed button, #contactForm p button { text-align: right;}
+#contactForm #cfMessage label.error { right: 20px;}

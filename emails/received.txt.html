@@ -1,0 +1,46 @@
+<v:store:user>NEW ORDER RECEIVED!
+
+The order was placed <v:text strftime="%B %d, %Y" /> at <v:text strftime="%H:%M " /> EST and the order number is <v:text placeholder="id" />.
+
+--------
+SOLD TO:
+--------
+
+<v:text path="billing_name" />
+<v:text path="billing_company" />
+<v:text path="billing_address" />
+<v:text path="billing_address_2" />
+<v:text path="billing_city" />
+<v:text path="billing_state" />
+<v:text path="billing_country" />
+<v:text path="billing_zip" />
+<v:text path="billing_phone" />
+<v:text path="e_mail_address" />
+
+--------
+SHIP TO:
+--------
+
+<v:text path="shipping_name" />
+<v:text path="shipping_company" />
+<v:text path="shipping_address" />
+<v:text path="shipping_address_2" />
+<v:text path="shipping_city" />
+<v:text path="shipping_state" />
+<v:text path="shipping_country" />
+<v:text path="shipping_zip" />
+<v:text path="shipping_phone" />
+</v:store:user>
+--------
+ORDERED:
+--------
+<v:store:cart:items>
+<v:text path="name" /> - <v:text path="option_value" /> - <v:text path="qty" />: $<v:text path="total" number_format="2" /></v:store:cart:items>
+    
+SUBTOTAL: $<v:store:cart:subtotal />
+SHIPPING: $<v:store:cart:shipping /><v:store:if_discount>
+DISCOUNT: ($<v:store:cart:discount />)</v:store:if_discount><v:store:if_tax>
+TAX     : $<v:store:cart:tax /></v:store:if_tax>
+TOTAL   : $<v:store:cart:total />
+
+Copyright (c)2010 Flair Home Collection.  All rights reserved.

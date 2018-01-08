@@ -1,0 +1,49 @@
+<div id="email_item" class="email-item">
+	<h2>Email Item</h2>
+	
+	<form action="/development/mail.php" method="post">
+	 <input type="hidden" id="product_id" name="product_id" value="<v->" />
+      <p>
+        <label for="email_sender_email">Your Email</label>
+        <input name="email_sender_email" value="" id="email_sender_email" class="text email required" />
+      </p>
+      
+      <p>
+        <label for="email_sender_name">Your Name</label>
+        <input name="email_sender_name" value="" id="email_sender_name" class="text required" />
+      </p>
+
+      <p>
+        <label for="email_recipient_email">Their Email</label>
+        <input name="email_recipient_email" value="" id="email_recipient_email" class="text email required" />
+      </p>
+      
+      <p>
+        <label for="email_recipient_name">Their Name</label>
+        <input name="email_recipient_name" value="" id="email_recipient_name" class="text required" />
+      </p>
+      
+      <p>
+        <label for="shared_item">Item</label>
+        <h2 class="ignore-input disabled">Inquiry on Item #<? echo $item->item_number; ?>: <? echo $item->title; ?></h2>
+        
+        <input name="shared_item" value="Inquiry on Item #<? echo $item->item_number; ?>: <? echo $item->title; ?>" id="shared_item" class="text required" type="hidden" />
+        <input name="shared_item_info" type="hidden" value="http://www.flairhomecollection.com/<v~>" id="shared_item_info" class="text required" />
+      </p>
+
+      <p>
+        <label for="email_subject">Subject</label>
+        <input name="email_subject" value="" id="email_subject" class="text required" />
+      </p>
+
+      <p id="cfMessage" class="textarea text">
+        <label for="email_message">Message</label>
+        <textarea name="email_message" id="email_message" rows="6" cols="20" class="required"></textarea>
+      </p>
+      <div class="ignore"><v:captcha /></div>
+      <p><button type="submit" class="button">Send</button></p>
+	</form>
+	
+	<div class="clear"></div>
+	
+</div>

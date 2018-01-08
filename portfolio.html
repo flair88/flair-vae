@@ -1,0 +1,127 @@
+<?
+  $_REQUEST['loc'] = 'portfolio';
+  $portfolio_1 = vae("/design_services/portfolio[secondary='0']", array('limit'=>2));
+  $portfolio_2 = vae("/design_services/portfolio[secondary='0']", array('limit'=>1, 'skip'=>2));
+  $secondary = vae("/design_services/portfolio[secondary='1']", array('limit'=>2));
+  if((string)$_REQUEST['id']):
+    $portfolio = vae($_REQUEST['id']);
+  endif;
+?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Flair Home Collection New York | Portfolio<? ((string)$_REQUEST['id']) ? ' | ' . $portfolio->title : ''; ?></title>
+	<link href="/lib/css/import.css" rel="stylesheet" type="text/css" media="all" />
+	<!--[if lte IE 7]><link href="lib/css/ie7.css" rel="stylesheet" type="text/css" media="all"> <![endif]-->
+	<!--[if lte IE 6]><link href="lib/css/ie6.css" rel="stylesheet" type="text/css" media="all"> <![endif]-->
+ 	<script src="/lib/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+ 	<script src="/lib/js/jquery.cycle.all.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/lib/js/jquery.tools.min.js" type="text/javascript"></script>
+	<script src="/lib/js/global.js" type="text/javascript"></script>
+
+</head>
+
+
+<body id="portfolioPg">
+	<?php vae_include('/lib/includes/header.html'); ?>
+	<div id="page">
+    <? if (!(string)$_REQUEST['id']): ?>
+    <?php vae_include('/lib/includes/logo.php'); ?>
+	   
+		<div id="portfolioBox" class="col12">
+
+			<div class="portfolioRow1 col12">
+				<ul>
+          <? foreach ($portfolio_1 as $portfolio): ?>
+  					<li>
+  						<a href="<? echo $portfolio->permalink; ?>">
+  						<img src="<? echo vae_data_url().vae_image($portfolio->thumbnail, 458,458,"Square"); ?>">
+  						</a>
+  						<a href="<? echo $portfolio->permalink; ?>" class="tooltip"><? echo $portfolio->title; ?></a>
+  					</li>
+          <? endforeach ;?>
+				</ul>
+			</div>
+
+			<div class="portfolioRow2 col6">
+				<ul>
+          <? foreach ($portfolio_2 as $portfolio): ?>
+					 <li>
+              <a href="<? echo $portfolio->permalink; ?>">
+              <img src="<? echo vae_data_url().vae_image($portfolio->thumbnail, 458,458,"Square"); ?>">
+              </a>
+              <a href="<? echo $portfolio->permalink; ?>" class="tooltip"><? echo $portfolio->title; ?></a>
+            </li>
+          <? endforeach; ?>
+				</ul>
+			</div>
+
+			<div class="portfolioRow3 col6">
+				<ul>
+          <? foreach ($secondary as $portfolio): ?>
+					<li>
+              <a href="<? echo $portfolio->permalink; ?>">
+              <img src="<? echo vae_data_url().vae_image($portfolio->thumbnail, 458,458,"Square"); ?>">
+              </a>
+              <a href="<? echo $portfolio->permalink; ?>" class="tooltip"><? echo $portfolio->title; ?></a>
+          </li>
+          <? endforeach; ?>
+				</ul>
+			</div>
+
+			<div class="clear"> </div>
+		</div>
+    <? else: ?>
+       <div class="portfolio-slideshow">
+      <div id="prev-slide"></div>
+      <div id="next-slide"></div>
+      <div id="slideshow" class="slideshow-contents">
+        <? foreach ($portfolio->images as $image): ?>
+          <div><img
+            data-thumb="<? echo vae_data_url().vae_image($image->image, 120, 80, "Thumbnail"); ?>"
+            src="<? echo vae_data_url().vae_image($image->image, 940, 700); ?>"></div>
+        <? endforeach; ?>
+      </div>
+
+      <ul id="slideshow-nav" class="slideshow-thumbs">
+      </ul>
+
+      <div class="slideshow-caption">
+        <p class="caption"><? echo $portfolio->title; ?></p>
+        <? foreach ($portfolio->credits as $credit): ?>
+          <p><? echo $credit->title; ?> <span class="author"><? echo $credit->name; ?></span></p>
+        <? endforeach; ?>
+      </div>
+     </div>
+
+
+     <div class="clear"> </div>
+
+      <script type="text/javascript">
+
+           $(function() {
+               $('#slideshow').cycle({
+                  speed:  'fast',
+                  timeout: 0,
+                  prev:    '#prev-slide',
+                  next:    '#next-slide',
+                  pager:  '#slideshow-nav',
+                  pagerAnchorBuilder: function(idx, slide) {
+                    var thumb = $(slide.innerHTML).attr('data-thumb');
+                    return '<li><img src="' + thumb + '"></li>';
+                  },
+                  after: function(){}
+               });
+          });
+      </script>
+    <? endif; ?>
+	</div><!-- #page -->
+
+	<?php vae_include('/lib/includes/footer.html'); ?>
+
+</body>
+</html>

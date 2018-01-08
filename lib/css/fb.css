@@ -1,0 +1,24 @@
+#fancybox-loading { position: fixed; top: 50%; left: 50%; height: 40px; width: 40px; margin-top: -20px; margin-left: -20px; cursor: pointer; overflow: hidden; z-index: 10104; display: none;}
+* html #fancybox-loading {	/* IE6 */ position: absolute; margin-top: 0;}
+#fancybox-loading div { position: absolute; top: 0; left: 0; width: 40px; height: 480px; background-image: url('images/fancy_loading.png');}
+
+#fancybox-overlay { position: fixed; top: 0; left: 0; bottom: 0; right: 0; background: #000; z-index: 10100; display: none;}
+* html #fancybox-overlay {	/* IE6 */ position: absolute; width: 100%;}
+
+#fancybox-tmp { padding: 0; margin: 0; border: 0; overflow: auto; display: none;}
+#fancybox-wrap { position: absolute; top: 0; left: 0; margin: 0; padding: 20px; z-index: 10101; display: none;}
+#fancybox-outer { position: relative; width: 100%; height: 100%; background: #FFF;}
+#fancybox-inner { position: absolute; top: 0; left: 0; width: 1px; height: 1px; padding: 0; margin: 0; outline: none; overflow: hidden;}
+
+#fancybox-close { position: absolute; top: -15px; right: -15px; width: 32px; height: 32px; background-image: url('images/close-btn.png'); cursor: pointer; z-index: 10103; display: none;}
+#fancybox_error { color: #444; font: normal 12px/20px Arial; padding: 7px; margin: 0;}
+
+#fancybox-content { height: auto; width: auto; padding: 0; margin: 0;}
+#fancybox-img { width: 100%; height: 100%; padding: 0; margin: 0; border: 1px solid #ccc; outline: none; line-height: 0; vertical-align: top; -ms-interpolation-mode: bicubic;}
+#fancybox-title { position: absolute; bottom: 0; left: 0; font-family: Garamond, 'Times New Roman'; font-size: 14px; z-index: 10102;}
+.fancybox-title-inside { padding: 10px 0; text-align: left; color: #333;}
+.fancy-bg, #fancy-bg-n, #fancy-bg-ne, #fancy-bg-e, #fancy-bg-se, #fancy-bg-s, #fancy-bg-sw, #fancy-bg-w, #fancy-bg-nw  { display: none; visibility: hidden;}
+
+/* IE */
+#fancybox-loading.fancybox-ie div	{ background: transparent; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='lib/css/images/fancy_loading.png', sizingMethod='scale'); }
+.fancybox-ie #fancybox-close		{ background: transparent; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='lib/css/images/close-btn.png', sizingMethod='scale'); }

@@ -1,0 +1,40 @@
+<? $_REQUEST['loc'] = 'design'; ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Flair Home Collection New York | Design Services</title>
+	<link href="lib/css/import.css" rel="stylesheet" type="text/css" media="all" />
+	<!--[if lte IE 7]><link href="lib/css/ie7.css" rel="stylesheet" type="text/css" media="all"> <![endif]-->
+	<!--[if lte IE 6]><link href="lib/css/ie6.css" rel="stylesheet" type="text/css" media="all"> <![endif]-->
+ 	<script src="lib/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+ 	<script src="lib/js/jquery.cycle.all.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="lib/js/jquery.tools.min.js" type="text/javascript"></script>
+	<script src="lib/js/global.js" type="text/javascript"></script>
+  <? $design = vae("/design_services"); ?>
+</head>
+
+<body id="designSvcsPg">
+	<?php vae_include('/lib/includes/header.html'); ?>
+	<div id="page">
+	 <?php vae_include('/lib/includes/logo.php'); ?>
+		<div class="six-stack-a">
+	    	 <div class="slide-1">
+	    	 	<img src="<? echo vae_data_url().vae_sizedimage($design->image, "Slide");?>" />
+	    	 </div>
+	        <div class="text-2">
+	        	<h2><? echo $design->title; ?></h2>
+	  	  		<? echo vae_richtext($design->text); ?>
+	        </div>
+	  	</div>
+	  	<div class="design-examples col12">
+	  		<? foreach($design->get("bottom_images", array('limit'=>2)) as $bottom_image): ?>
+	  	<div class="col6"><img src="<? echo vae_data_url().vae_sizedimage($bottom_image->image, "landscape");?>" /></div>
+	  		<? endforeach; ?>
+		</div>
+  </div><!-- #page -->
+	<?php vae_include('/lib/includes/footer.html'); ?>
+</body>
+</html>

@@ -1,0 +1,270 @@
+<div id="cartBox" >
+	<ul>
+	
+		<? // var_dump( vae_store_cart_items() ); ?>
+		<? foreach (vae_store_cart_items() as $cart_id => $item): ?>
+			<? $item = vae($item['id']); ?>
+			<? $cart_item = vae_store_cart_item($cart_id); ?>
+			
+			<li class="single-item" id="single-item-<? echo $cart_id; ?>">
+				<div class="cartProductThumb">
+					<a href="<? echo vae_permalink($item->id); ?>">
+						<img src="<? echo vae_data_url().vae_image($item->images->image, '108', '108', 'Square'); ?>" width="108" height="108" alt="<? echo $item->title; ?>" />
+					</a>
+				</div>
+	
+				<div class="cartProductInfo">
+					<dl>
+						<dt>Item Name:</dt>
+						<dd class="itemName">
+							<a href="<? echo vae_permalink($item->id); ?>">
+								<? echo $item->title; ?>
+							</a>
+						</dd>
+	
+						<dt>Price:</dt>
+						<dd>$<? echo $item->price; ?></dd>
+	
+						<dt>Quantity:</dt>
+						<dd class="quantityAdjust">
+							<span class="count"><? echo $cart_item['qty']; ?></span>
+								<ul>
+									<li class="add">
+										<a
+											href="/cart.php?cart_id=<? echo $cart_id; ?>&method=set_quantity&qty=<? echo $cart_item['qty'] + 1; ?>"
+										>
+											More
+										</a>
+									</li>
+									
+									<li class="subtract">
+										<a href="/cart.php?cart_id=<? echo $cart_id; ?>&method=set_quantity&qty=<? echo $cart_item['qty'] - 1; ?>">
+											Less
+										</a>
+									</li>
+								</ul>
+								<? if (!$checkout): ?>
+							<span class="remove"><a href="/cart.php?cart_id=<? echo $cart_id; ?>&method=set_quantity&qty=0">Remove</a></span>
+							<? endif; ?>
+						</dd>
+						
+						<? if( (string)$item->requires_custom_shipping ): ?>
+							<dt>Shipping:</dt>
+							<dd><a class="custom-shipping" href="/about/custom-shipping">Custom Shipping*</a></dd>
+						<? endif; ?>
+					</dl>
+				</div>
+			</li>
+			
+		<? endforeach; ?>
+		
+		<script type="text/javascript">
+		$(document).ready(function() {
+			$('#cartBox').each(function(){
+				var $this = $(this);
+				
+				$this.find('span.remove a').click(function() {
+					$.ajax({
+						type: 'POST',
+						url: $(this).attr('href') + '&ajax=true',
+						dataType: 'json',
+						success: function(d) {
+							if( d.remove_item ) {
+								var cart_id = d.remove_item.cart_id;
+								
+								$('#single-item-' + cart_id).slideUp(function() {
+										window.location.reload();
+								});
+								
+							}
+						}
+					});
+					
+					return false;
+				});
+				
+				$this.find('li.add a,li.subtract a').click(function() {
+					var $link = $(this);
+					var $li = $link.parents('li').eq(0);
+					var $item = $link.parents('li.single-item').eq(0);
+					
+					var $add_link = $item.find('li.add a');
+					var $subtract_link = $item.find('li.subtract a');
+					
+					$.ajax({
+						type: 'POST',
+						url: $(this).attr('href') + '&ajax=true',
+						dataType: 'json',
+						success: function(d) {
+						  if( d.extra_message != '' && typeof(d.extra_message) != 'undefined' ) {
+						    alert( d.extra_message );
+						  }
+						  
+							if( d.remove_item ) {
+								var cart_id = d.remove_item.cart_id;
+								
+								$('#single-item-' + cart_id).slideUp(function() {
+                  window.location.reload();
+								});
+								
+							} else {
+								var cart_subtotal = d.cart_subtotal;
+								var cart_id = d.cart_id;
+								var qty = parseInt( d.qty );
+								
+								$add_link.attr('href', 'http://flair.verbsite.com/cart.php?cart_id=' + cart_id + '&method=set_quantity&qty=' + ( qty + 1 ) + '&ajax=true');
+								
+								$subtract_link.attr('href', 'http://flair.verbsite.com/cart.php?cart_id=' + cart_id + '&method=set_quantity&qty=' + ( qty - 1 ) + '&ajax=true');
+								
+								$item.find('.cartProductInfo .quantityAdjust .count').html( qty );
+								
+								$('#cartSubtotal .unitPrice .currency').html( cart_subtotal );
+							}
+						},
+						dataType: 'json'
+					});
+					
+					return false;
+				});
+			});
+		});
+		</script>
+
+		<!--
+		
+		<li>
+			<div class="cartProductThumb">
+				<a href="product-detail.php"><img src="images/fpo-cart-thumb.jpg" width="108" height="107" alt=" " /></a>
+			</div>
+
+			<div class="cartProductInfo">
+				<dl>
+					<dt>Item Name:</dt>
+					<dd class="itemName"><a href="product-detail.php">Item Name Goes Here</a></dd>
+
+					<dt>Price:</dt>
+					<dd>$4800.00</dd>
+
+					<dt>Quantity:</dt>
+					<dd class="quantityAdjust">
+						<span class="count">1</span>
+							<ul>
+								<li class="add"><a href="#">More</a></li>
+								<li class="subtract"><a href="#">Less</a></li>
+							</ul>
+						<span class="remove"><a href="#">Remove</a></span>
+					</dd>
+
+					<dt>Shipping:</dt>
+					<dd>$200.00</dd>
+				</dl>
+			</div>
+		</li>
+
+		<li>
+			<div class="cartProductThumb">
+				<a href="product-detail.php"><img src="images/fpo-cart-thumb.jpg" width="108" height="107" alt=" " /></a>
+			</div>
+
+			<div class="cartProductInfo">
+				<dl>
+					<dt>Item Name:</dt>
+					<dd class="itemName"><a href="product-detail.php">Item Name Goes Here</a></dd>
+
+					<dt>Price:</dt>
+					<dd>$4800.00</dd>
+
+					<dt>Quantity:</dt>
+					<dd class="quantityAdjust">
+						<span class="count">1</span>
+							<ul>
+								<li class="add"><a href="#">More</a></li>
+								<li class="subtract"><a href="#">Less</a></li>
+							</ul>
+						<span class="remove"><a href="#">Remove</a></span>
+					</dd>
+
+					<dt>Shipping:</dt>
+					<dd>$100.00</dd>
+				</dl>
+			</div>
+		</li>
+		
+		<li>
+			<div class="cartProductThumb">
+				<a href="product-detail.php"><img src="images/fpo-cart-thumb.jpg" width="108" height="107" alt=" " /></a>
+			</div>
+
+			<div class="cartProductInfo">
+				<dl>
+					<dt>Item Name:</dt>
+					<dd class="itemName"><a href="product-detail.php">Item Name Goes Here</a></dd>
+
+					<dt>Price:</dt>
+					<dd>$4800.00</dd>
+
+					<dt>Quantity:</dt>
+					<dd class="quantityAdjust">
+						<span class="count">1</span>
+							<ul>
+								<li class="add"><a href="#">More</a></li>
+								<li class="subtract"><a href="#">Less</a></li>
+							</ul>
+						<span class="remove"><a href="#">Remove</a></span>
+					</dd>
+
+					<dt>Shipping:</dt>
+					<dd>$100.00</dd>
+				</dl>
+			</div>
+		</li>
+
+		<li>
+			<div class="cartProductThumb">
+				<a href="product-detail.php"><img src="images/fpo-cart-thumb.jpg" width="108" height="107" alt=" " /></a>
+			</div>
+
+			<div class="cartProductInfo">
+				<dl>
+					<dt>Item Name:</dt>
+					<dd class="itemName"><a href="product-detail.php">Item Name Goes Here</a></dd>
+
+					<dt>Price:</dt>
+					<dd>$4800.00</dd>
+
+					<dt>Quantity:</dt>
+					<dd class="quantityAdjust">
+						<span class="count">1</span>
+							<ul>
+								<li class="add"><a href="#">More</a></li>
+								<li class="subtract"><a href="#">Less</a></li>
+							</ul>
+						<span class="remove"><a href="#">Remove</a></span>
+					</dd>
+
+					<dt>Shipping:</dt>
+					<dd>$100.00</dd>
+				</dl>
+			</div>
+		</li>
+		
+		-->
+	</ul>
+	
+
+
+	<div id="custom-shipping">
+		
+		<div id="primeContent" class="col5plus">
+      <div class="inside">
+      	<h2>Custom Shipping</h2>
+      	<v=/shop/custom_shipping_text>
+      </div>
+    </div>
+    
+	</div>
+	<style type="text/css">
+	#cartBox #custom-shipping { display: none; }
+	</style>
+
+</div>

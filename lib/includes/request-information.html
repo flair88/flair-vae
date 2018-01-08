@@ -1,0 +1,42 @@
+
+<div id="request_information" class="email-item">
+	<h2>Request Information</h2>
+	
+	<? $contact = vae('/contact'); ?>
+	
+	<form action="/mailer.php" method="post">
+		<input type="hidden" name="email_recipient_email" value="<?=$contact->recipient_email;?>" />
+	
+      <p>
+        <label for="inquiry_sender_email">Your Email</label>
+        <input name="inquiry_sender_email" value="" id="inquiry_sender_email" class="text email required" />
+      </p>
+      
+      <p>
+        <label for="inquiry_sender_name">Your Name</label>
+        <input name="inquiry_sender_name" value="" id="inquiry_sender_name" class="text required" />
+      </p>
+      
+      <div class="ignore">
+        <p>
+          <h2 class="ignore-input disabled">Inquiry on Item #<? echo $item->item_number; ?>: <? echo $item->title; ?></h2>
+          
+          <input name="subject" value="Inquiry on Item #<? echo $item->item_number; ?>: <? echo $item->title; ?>" id="subject" class="text required" type="hidden" />
+        </p>
+      </div>
+
+      <p id="cfMessage" class="textarea text">
+        <label for="inquiry_message">Message</label>
+        <textarea name="inquiry_message" id="inquiry_message" rows="6" cols="20" class="required"></textarea>
+      </p>
+      <div class="ignore">
+      <div class="g-recaptcha" data-sitekey="6LdBawcUAAAAAMIcaT0igHhRB2K_4OV067iRXsqa">
+        
+      </div>
+</div>
+      <p><button type="submit" class="button">Send</button></p>
+	</form>
+	
+	<div class="clear"></div>
+	
+</div>

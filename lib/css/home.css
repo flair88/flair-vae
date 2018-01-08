@@ -1,0 +1,65 @@
+/*-------------------------------------------------
+ Homepage Gallery
+-------------------------------------------------*/
+.slide, .slide div { height: 700px; overflow: hidden; position: relative; width: 940px;}
+.slide div div { position: absolute; z-index: 100;}
+#homePg .slide img { display: none; }
+
+/* Full Page Single Image */
+.slide .one-horz-a .slide-1 { height: 700px; left: 0px; top: 0px; width: 940px;}
+
+/* Left Column 460x220 */
+.slide .six-stack-a .slide-1, .slide .three-stack-a .slide-1, .slide .three-stack-a .slide-3, .slide .four-stack-a .slide-1,
+.slide .six-stack-b .slide-1 { height: 220px; left: 0px; width: 460px;}
+
+.slide .six-stack-a .slide-1, .slide .three-stack-a .slide-1, .slide .four-stack-a .slide-1,
+.slide .six-stack-b .slide-1 { top: 0px;}
+
+.slide .three-stack-a .slide-3 { bottom: 0px;}
+
+/* Left Column 300x220 */
+.slide .six-stack-a .slide-5, .slide .six-stack-b .slide-3, .slide .four-stack-a .slide-3, .slide .five-stack-a .slide-2, 
+.slide .five-stack-a .slide-4, .slide .seven-stack-a .slide-2, .slide .seven-stack-a .slide-5 { height: 220px; width: 300px;}
+
+.slide .six-stack-a .slide-5, .slide .six-stack-b .slide-3, .slide .four-stack-a .slide-3, .slide .five-stack-a .slide-4,
+.slide .seven-stack-a .slide-5 { bottom: 0px; left: 0px;}
+
+.slide .five-stack-a .slide-2, .slide .seven-stack-a .slide-2 { left: 160px; top: 0px;}
+
+/* Left Column 140x220 */
+.slide .six-stack-a .slide-6, .slide .six-stack-b .slide-4, .slide .four-stack-a .slide-4, .slide .five-stack-a .slide-1,
+.slide .five-stack-a .slide-5, .slide .seven-stack-a .slide-1, .slide .seven-stack-a .slide-6 { height: 220px; width: 140px;}
+
+.slide .six-stack-a .slide-6, .slide .six-stack-b .slide-4, .slide .four-stack-a .slide-4, .slide .five-stack-a .slide-5, 
+.slide .seven-stack-a .slide-6 { bottom: 0px; left: 320px;}
+
+.slide .five-stack-a .slide-1, .slide .seven-stack-a .slide-1 { left: 0px; top: 0px;}
+
+
+/* Right Column 460x700 */
+.slide .three-stack-a .slide-2, .slide .four-stack-a .slide-2, .slide .five-stack-a .slide-3 { height: 700px; right: 0px; top: 0px; width: 460px;}
+
+/* Right Column 460x460 */
+.slide .six-stack-a .slide-4, .slide .six-stack-b .slide-2 { height: 460px; right: 0px; width: 460px;}
+
+.slide .six-stack-a .slide-4 { bottom: 0px;}
+.slide .six-stack-b .slide-2 { top: 0px;}
+
+/* Right Column 460x220 */
+.slide .seven-stack-a .slide-3, .slide .seven-stack-a .slide-4, .slide .seven-stack-a .slide-7 { height: 220px; right: 0px; width: 460px;}
+
+.slide .seven-stack-a .slide-3 { top: 0px;}
+.slide .seven-stack-a .slide-4 { top: 240px;}
+.slide .seven-stack-a .slide-7 { bottom: 0px;}
+
+/* Right Column 300x220 */
+.slide .six-stack-a .slide-3, .slide .six-stack-b .slide-5 { height: 220px; width: 300px;}
+
+.slide .six-stack-a .slide-3 { right: 0px; top: 0px;}
+.slide .six-stack-b .slide-5 { bottom: 0px; right: 160px;}
+
+/* Right Column 140x220 */
+.slide .six-stack-a .slide-2, .slide .six-stack-b .slide-6 { height: 220px; width: 140px;}
+
+.slide .six-stack-a .slide-2 { right: 320px; top: 0px;}
+.slide .six-stack-b .slide-6 { bottom: 0px; right: 0px;}

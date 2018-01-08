@@ -1,0 +1,36 @@
+/* Shop Pg
+-------------------------------------------------*/
+.shopRow2 { margin: 0 0 20px 240px ;}
+#tooltip { background-color: #1e1e1e; background-image: none;}
+
+
+/* Locations Pg
+-------------------------------------------------*/
+#pageHeader img { margin-bottom: -3px;}
+
+
+/* Contact Form
+-------------------------------------------------*/
+body#contactPg #contactForm label.overlabel-apply, body#contactPg #contactForm label.error { top: 13px; }
+
+
+/* Product Detail Pg
+-------------------------------------------------*/
+.productSpecs { margin-bottom: 0px;}
+
+
+/* Checkout Pg and Cart Pg
+-------------------------------------------------*/
+#cartBox .quantityAdjust ul { width: 8px;}
+#cartBox .quantityAdjust li a { line-height: 6px; }
+#checkout #cartBox ul li { margin-bottom: 8px;}
+#checkout #cartBox { padding-bottom: 10px;}
+
+/* Register Pg
+-------------------------------------------------*/
+#register form .input label.overlabel-apply { bottom: 5px;}
+#register form .input.small label.overlabel-apply { bottom: 4px; left: 0px;}
+form .select select { height: 28px;}
+
+#register form .input label.error { bottom: 4px;}
+#register form .input.small label.error { bottom: 3px; right: 7px;}

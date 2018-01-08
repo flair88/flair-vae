@@ -1,0 +1,112 @@
+<? $registry = vae($_REQUEST['reg_id']); ?>
+<html>
+<head>
+<title>Flair Home Collection New York | <?= $registry->title; ?></title>
+<style type="text/css">
+<!--
+table {
+width:600px;
+margin:0 auto;  
+text-align: center;
+}
+#item{
+border-style:solid;
+border-width:5px;
+}
+.desc{
+width:400px;
+text-align: left; 
+vertical-align: top;
+}
+.info{
+width:200px;
+text-align: left; 
+vertical-align: top;
+}
+.border{
+border: 2px solid #000;  
+}
+h1 {
+	font-family: Garamond, "Hoefler Text", Palatino, "Palatino Linotype", serif;
+	font-weight: normal;
+	font-size: 21px;
+	margin-top: 0px;
+}
+p {
+	font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 18px;
+	margin-bottom: 0px;
+	color: #666666;
+}
+
+body {
+  width: 100%;
+  padding: 0px;
+  margin: 0px;
+}
+.page-break  { display:block; page-break-before:always; padding-top: 90px;}
+}
+-->
+</style>
+
+</head>
+  <body onload="window.print();">
+  <v:pdf filename="Registry"  />
+<table cellspacing="20" >
+    
+  <tbody>
+      
+    <tr >
+      <td>
+        <img src="flair.png" />
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <h1><?= $registry->title; ?> Items</h1>
+      </td>
+    </tr> 
+
+  <? $i=0; ?>
+  <? foreach ($registry->items as $item): ?>
+    <tr <?= ($i!=0)? "class='page-break'":''; ?>>
+    <td class="border">
+    
+    <table cellpadding ="10" > 
+      
+      <tr>
+        <td colspan="2">
+          <img src="<?= vae_data_url().vae_image($item->get(" images", array('limit'=>1))->image, 400,400); ?>"/>
+        </td>
+      </tr>
+      
+      <tr >
+        <td class="desc">
+          <h1><?= $item->title;?></h1 >
+          <p><?= $item->description;?></p>
+        </td>
+        
+        <td class="info">
+          <h1>$<?= number_format((string)$item->price,2);?></h1>
+          <p>Item #: <?= $item->item_number;?></p>
+          <p><?= $item->specs; ?></p>
+          <p><?= $item->color; ?></p>
+        </td>
+      </tr>
+      <tr>
+      <td colspan="2">
+      <p><?= "http://www.flairhomecollection.com".$item->permalink; ?></p>
+      </td>
+      </tr>
+    
+    </table>
+    </td>
+    </tr>
+    <? $i++;?>
+  <? endforeach; ?>
+  </tbody>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,110 @@
+<div id="header">
+	<h1 id="logo"><a href="/" title="Flair">Flair</a></h1>
+	<h1 id="miniLogo"><a href="/" title="Flair">Flair</a></h1>
+	<ul id="nav" class="<? echo ( $is_active ? 'third-row' : '' ); ?>">
+		<li><a href="/shop" class="shopBtn">Shop</a>
+			<ul class="shopSubNav">
+			    <? /* <li><a href="/shop" class="<? echo ( $_REQUEST['id'] ? '' : 'allSubBtn' ); ?>">All</a></li> */ ?>
+
+			  <? $was_active = false; ?>
+			  <? $cats = vae('/shop/categories[hide!=1]'); ?>
+			  <? foreach($cats as $id=>$cat): ?>
+			  
+				<?
+				// i apologize to dmitry samochine.
+				// i did not intend to do this.
+				// - naz
+				
+				$request_id = $_REQUEST['id'];
+				if( $request_id ) {
+					if( vae($request_id)->category->id ) {
+						$category = (
+							vae($request_id)->category->id == $id ||
+							vae( vae($request_id)->category->id . '/..' )->id == $id
+						);
+					} else {
+						$category = false;
+					}
+					
+					$is_active = (
+						$category ||
+						$_REQUEST['id'] == $id ||
+						vae($request_id . '/..')->id == $id
+					);
+
+					if( $is_active && count($cat->subcategories) > 0 ) {
+						$was_active = true;
+					}
+				}
+				?>
+			   <li class="<? echo ( $is_active ? 'showInnerUl' : '' ); ?>">
+			   	
+			   	<a href="<? echo vae_permalink($id); ?>"
+			   		<?
+		   			if( $request_id ):
+			   			if(
+				   			$is_inner
+				   		): ?>
+				   		class="allSubBtn showInnerUl"
+				   		<? endif; ?>
+			   		<? endif; ?>
+			   		class="superCat"
+			   	>
+			   		<? echo $cat->title; ?>
+			   	</a>
+			   	
+			   	<? if( count($cat->subcategories) > 0 ): ?>
+			   		<ul class="subcategories">
+			   			<? foreach( $cat->subcategories as $id => $subcategory ): ?>
+			   				<li>
+			   					<a class="<?=( $id == $_REQUEST['id'] ? 'active' : '' );?>" href="<? echo vae_permalink($id); ?>">
+			   						<? echo $subcategory->title; ?>
+			   					</a>
+			   				</li>
+			   			<? endforeach; ?>
+			   		</ul>
+			   	<? endif; ?>
+			   </li>
+			  <? endforeach; ?>
+			  
+			  <? if( $was_active ): ?>
+			  <style type="text/css">
+			  #nav { margin-top: 24px !important; }
+			  </style>
+			  <? endif; ?>
+			  
+			</ul>
+		</li>
+		<li><a href="/about" class="aboutBtn">About</a>
+			<ul class="aboutSubNav">
+			  <? $pages = vae('/about_pages'); ?>
+			  <? $i=1; ?>
+			  <? foreach($pages as $id=>$page): ?>
+			    <? if($i==2): ?>
+			      <li><a href="/press" <?=($press?'class="active"' : '');?>>Press</a></li>
+			    <? endif; ?>
+			      <li><a href="<? echo vae_permalink($id); ?>" class="<?=( $id == $_REQUEST['id'] ? 'active' : '' );?>"><? echo $page->title; ?></a></li>
+			      <? $i++; ?>
+			  <? endforeach; ?>
+			</ul>
+		</li>
+		<li><a href="/locations" class="locationsBtn">Locations</a></li>
+		<!-- <li><a href="/design-services.php" class="designSvcsBtn">Design Services</a></li> -->
+		<li><a href="/contact" class="contactBtn">Contact</a></li>
+	</ul>
+	
+	<div class="viewCartNav">
+		<span><a href="/cart">View Cart</a> |</span>
+		<span class="numberOfItems"><? echo count(vae_store_cart_items()); ?> Items</span>
+	</div>
+
+  <? /* 
+	<v:if path="category/title">
+		<div class="productBreadCrumb">
+			<span class="bcSubCat"><v:a path="category"><v=category/title></v:a></span>
+			<span>&bull;</span>
+			<span class="bcItemName"><v=title></span>
+		</div>
+	</v:if>
+  */ ?>
+</div><!-- #header -->

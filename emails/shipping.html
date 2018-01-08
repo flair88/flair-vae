@@ -1,0 +1,165 @@
+<style type="text/css">
+<!--
+body {margin:20px;background:#ffffff;}
+a:link {color: #000000;text-decoration:underline;}
+a:hover {color: #000000;}
+img {border:none;}
+h3{width:600px;}
+-->
+</style>
+
+<a href="http://flairhomecollection.com"><img src="http://flair.verbsite.com/print/flair.png" /></a>
+
+<div style="color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:12px;font-size-adjust:none;font-style:normal;font-variant:normal;font-weight:normal;line-height:2.0833em;margin-top:50px;">
+  <v:store:user>
+    <h3>Your order <strong><v:text placeholder="id" /></strong> has shipped!</h3>
+    <p>
+      The order was shipped via <strong><v:text placeholder="shipment_company" /></strong> 
+      and your tracking number is <strong><v:text placeholder="shipment_tracking_number" /></strong>.
+    </p>
+    <table border='0' cellpadding='0' style="color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:12px;font-size-adjust:none;font-style:normal;font-variant:normal;font-weight:normal;line-height:2.0833em;">
+      <tr>
+        <td valign='top' width="300">
+          <h4>Billing Address:</h4>
+          <div class='line'>
+            <v:text path='billing_name' />
+          </div>
+          <div class='line'>
+            <v:text path='billing_company' />
+          </div>
+          <div class='line'>
+            <v:text path='billing_address' />
+          </div>
+          <div class='line'>
+            <v:text path='billing_address_2' />
+          </div>
+          <div class='line'>
+            <v:text path='billing_city' />
+            <v:text path='billing_state' />
+            <v:text path='billing_zip' />
+          </div>
+          <div class='line'>
+            <v:text path='billing_country' />
+          </div>
+          <div class='line'>
+            <v:text path='billing_phone' />
+          </div>
+        </td>
+        <td valign='top' width="300">
+          <h4>Shipping Address:</h4>
+          <div class='line'>
+            <v:text path='shipping_name' />
+          </div>
+          <div class='line'>
+            <v:text path='shipping_company' />
+          </div>
+          <div class='line'>
+            <v:text path='shipping_address' />
+          </div>
+          <div class='line'>
+            <v:text path='shipping_address_2' />
+          </div>
+          <div class='line'>
+            <v:text path='shipping_city' />
+            <v:text path='shipping_state' />
+            <v:text path='shipping_zip' />
+          </div>
+          <div class='line'>
+            <v:text path='shipping_country' />
+          </div>
+          <div class='line'>
+            <v:text path='shipping_phone' />
+          </div>
+        </td>
+      </tr>
+    </table>
+  </v:store:user>
+
+  <hr size="1" width="600" noshade="noshade" align="left" />
+  
+  <h4>Products Ordered:</h4>
+    <div>
+    <table width="600" border='0' cellpadding='0' cellspacing='0' style="color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:12px;font-size-adjust:none;font-style:normal;font-variant:normal;font-weight:normal;line-height:2.0833em;">
+		<tr>
+          <td width="300" height="20"><strong>Item</strong></td>
+          <td width="100" height="20" align="center"><strong>Qty</strong></td>
+          <td width="100" height="20" align="left"><strong>Price</strong></td>
+          <td width="100" height="20" align="right"><strong>Total</strong></td>
+        </tr>
+    <v:store:cart:items>
+		<tr>
+          <td width="300" height="20">
+              <v:text path='name' />
+              <p style="font-size:10px;line-height:22px;"><em><v:text path='description' /></em></p>
+              <p style="font-size:10px;line-height:22px;"><em><strong>Size:</strong> <v:text path='option_value' /></em></p>
+          </td>
+          <td width="100" height="20" align="center"><v:text path='qty' /></td>
+          <td width="100" height="20" align="left"><v:store:item:price /></td>
+          <td width="100" height="20" align="right"><v:store:item:price price_field='total' /></td>
+        </tr>
+        <v:php>if( (string)vae($context->id)->requires_custom_shipping ) { $_REQUEST['custom_shipping'] = true; }</v:php>
+    </v:store:cart:items>
+	</table>
+  </div>
+
+  <hr size="1" width="600" noshade="noshade" align="left" />
+  
+  <table border='0' cellspacing='0' style="color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:12px;font-size-adjust:none;font-style:normal;font-variant:normal;font-weight:normal;line-height:2.0833em;" width="600">
+    <tr>
+      <th align='left' width="400"></th>
+      <th align='left' width="94">Subtotal:</th>
+      <th width="100" align='right'>$<v:store:cart:subtotal /></th>
+    </tr>
+
+    <v:if param="custom_shipping">
+        <tr>
+          <th align='left' width="400"></th>
+          <th align='left'>Shipping:</th>
+          <th align='right'>Custom Shipping</th>
+        </tr>
+      
+      <v:else>
+        <tr>
+          <th align='left' width="400"></th>
+          <th align='left'>Shipping:</th>
+          <th align='right'>$<v:store:cart:shipping /></th>
+        </tr>
+      </v:else>
+    </v:if>
+    
+    <v:store:if_discount>
+    <tr>
+      <th align='left' width="400"></th>
+      <th align='left'>Discount:</th>
+      <th align='right'>($<v:store:cart:discount />)</th>
+    </tr>
+    </v:store:if_discount>
+    <v:store:if_tax>
+    <tr>
+      <th align='left' width="400"></th>
+      <th align='left'>Tax:</th>
+      <th align='right'>$<v:store:cart:tax /></th>
+    </tr>
+    </v:store:if_tax>
+    <tr>
+      <th align='left' width="400"></th>
+      <th align='left'>Total:</th>
+      <th align='right'>$<v:store:cart:total /></th>
+    </tr>
+  </table>
+  
+  <v:if param="custom_shipping">
+    <hr size="1" width="600" noshade="noshade" align="left" />
+    
+    <h3 style="color:red;"><v=/shop/custom_shipping_explanation></h3>
+  </v:if>
+  
+  <p>
+    Thanks,
+    <br />
+    <a href="http://flairhomecollection.com/" style="color: #000000; font-family: Helvetica, Arial, sans-serif;">Flair Home Collection</a>
+  </p>
+  <p>
+    Copyright &copy;2010 Flair Home Collection.  All rights reserved.
+  </p>
+</div>

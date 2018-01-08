@@ -1,0 +1,121 @@
+ <div id="header" class="new">
+  <h1 id="logo"><a href="/" title="Flair">Flair</a></h1>
+  <div id="mainNav">
+    <ul id="topNav">
+      <li>
+        <a href="/shop" class="shopBtn">Shop</a>            
+      </li>    
+      <li>
+        <a href="/about" class="aboutBtn">About</a>			
+  		</li>
+  		<li><a href="/locations" class="locationsBtn">Locations</a></li>
+  		<li><a href="/contact" class="contactBtn">Contact</a></li>
+  		<? if ($shop->show_extra_section == "1"): ?>
+        <li class="wallpapersBtn"><a href="http://flairhomecollection.com/shop/carte-renzo-mongiardino-wallpapers">Carte - Renzo Mongiardino's Wallpapers</a></li>
+  		<? endif; ?>
+  		<li><a href="/gift-registry" class="registryBtn">Registry</a></li>
+    </ul>
+    
+    <div id="headerRight">
+      <? $shop = vae("/shop"); ?>
+  		<? if ($shop->show_extra_section == "1"): ?>        
+        <a class="featureBtn" href="http://flairhomecollection.com/shop/carte-renzo-mongiardino-wallpapers">Carte - Renzo Mongiardino's Wallpapers</a>
+		  <? endif; ?>
+		  <div class="extraButtons">
+        <div class="cartButton">
+      		<span><a href="/cart">View Cart</a> |</span>
+      		<span class="numberOfItems"><? echo count(vae_store_cart_items()); ?> Items</span>
+        </div>
+
+		  </div>
+    </div>
+  </div><!-- mainNav -->
+ </div><!-- header -->
+ 
+ 
+ <? if($_REQUEST['loc']=='about'): ?>
+ 
+ <div id="panelAboutNav">
+    <? $pages = vae('/about_pages'); ?>
+    <? $i=1; ?>
+    <ul class="panelColumn">
+    <? foreach($pages as $id=>$page): ?>
+      <? if($i==2): ?>
+        <li class="mainCat">
+          <a href="/press" <?=($press?'class="active"' : '');?>>Press</a>
+        </li>
+      <? endif; ?>
+        <li class="mainCat">
+          <a href="<? echo vae_permalink($id); ?>" class="<?=( $id == $_REQUEST['id'] ? 'active' : '' );?>"><? echo $page->title; ?></a>
+        </li>
+        <? $i++; ?>
+    <? endforeach; ?>
+    </ul>
+    <div class="clear"></div>
+  </div><!-- panelAboutNav -->
+  
+  
+  <? elseif($_REQUEST['loc']=='shop'): ?>
+  
+  <div id="panelShopNav">
+    <?
+      $cats = vae('/shop/categories[hide!=1]');
+      
+      $perCol = 10;
+      
+      $i=1;
+      $thisCol=$ind=0;
+      foreach($cats as $cat):
+        $catItemCount = (string)$cat->subcategories->count + 1;
+        if($thisCol == 0):          
+          $results[$ind][] = (string)$cat->id;
+          $thisCol += $catItemCount;
+        elseif($thisCol < $perCol):
+          if($thisCol + $catItemCount > $perCol-$thisCol):
+            $ind++;
+            $thisCol = 0;
+            $results[$ind][] = (string)$cat->id;
+            $thisCol += $catItemCount;
+          else:
+            $results[$ind][] = (string)$cat->id;
+            $thisCol += $catItemCount;
+          endif;
+        elseif($thisCol >= $perCol):          
+          $ind++;
+          $thisCol = 0;
+          $results[$ind][] = (string)$cat->id;
+          $thisCol += $catItemCount;
+        endif;
+        $i++;
+      endforeach;
+    ?>  
+    
+
+    <? $i=1; ?>
+    <? foreach($results as $column): ?>
+      <? if($i==4): ?>
+      <ul class="panelColumn last">
+      <? else: ?>
+      <ul class="panelColumn">
+      <? endif; ?>
+        <? foreach($column as $catId): ?>
+          <? $cat = vae($catId); ?>
+          <li class="mainCat">
+            <a href="<? echo $cat->permalink; ?>"><? echo $cat->title; ?></a>
+          </li>
+          <? if($cat->subcategories->count): ?>
+            <? foreach($cat->subcategories as $subcat): ?>
+              <li class="panelSubCat">
+                <a href="<? echo $subcat->permalink; ?>"><? echo $subcat->title; ?></a>
+              </li>
+            <? endforeach; ?>
+          <? endif; ?>
+        <? endforeach; ?>        
+      </ul>
+      <? $i++; ?>
+    <? endforeach; ?>
+    
+    <div class="clear"></div>
+  </div><!-- panelShopNav -->
+  
+  <? endif; ?>

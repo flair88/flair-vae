@@ -1,0 +1,130 @@
+ <div id="header" class="new">
+        <? $shop = vae("/shop"); ?>
+
+  <div id="mainNav">
+    <ul id="topNav">
+      <li>
+        <a href="/shop" class="shopBtn<? if($_REQUEST['loc']=='shop'): ?> active<? endif; ?>">Shop</a>
+      </li>
+      <li>
+        <a href="/about" class="aboutBtn<? if($_REQUEST['loc']=='about'): ?> active<? endif; ?>">About</a>
+  		</li>
+  		<li><a href="/locations" class="locationsBtn<? if($_REQUEST['loc']=='locations'): ?> active<? endif; ?>">Locations</a></li>
+  		<li><a href="/contact" class="contactBtn<? if($_REQUEST['loc']=='contact'): ?> active<? endif; ?>">Contact</a></li>
+  		<li><a href="/gift-registry" class="registryBtn<? if($_REQUEST['loc']=='registry'): ?> active<? endif; ?>">Registry</a></li>
+  		<li><a href="/design-services" class="designBtn<? if($_REQUEST['loc']=='design'): ?> active<? endif; ?>">Design Services</a></li>
+      <li><a href="/portfolio" class="designBtn<? if($_REQUEST['loc']=='portfolio'): ?> active<? endif; ?>">Portfolio</a></li>
+
+  		<? if ($shop->extra_section == "1" && !isset($shop->extra_image)): ?>
+  		  <li><a href="<? echo $shop->extra_category->permalink; ?>" <? if($_REQUEST['id']==$shop->extra_category->id): ?>class="active"<? endif; ?>><? echo $shop->extra_category->title; ?></a></li>
+  		<? endif; ?>
+    </ul>
+
+    <div id="headerRight">
+      <? if ($shop->extra_section == "1" && isset($shop->extra_image)): ?>
+        <a class="featureBtn" style="background: url('<? echo vae_data_url().vae_image($shop->extra_image, "menu");?>') no-repeat 0 0;" href="<? echo $shop->extra_category->permalink; ?>"><? echo $shop->extra_category->title; ?></a>
+		  <? endif; ?>
+		  <div class="extraButtons">
+        <div class="cartButton">
+      		<span><a href="/cart">View Cart</a> |</span>
+      		<span class="numberOfItems"><? echo count(vae_store_cart_items()); ?> Items</span>
+        </div>
+
+		  </div>
+    </div>
+  </div><!-- mainNav -->
+ </div><!-- header -->
+
+
+ <? if($_REQUEST['loc']=='about'): ?>
+
+ <div id="panelAboutNav">
+    <? $pages = vae('/about_pages'); ?>
+    <? $i=1; ?>
+    <ul class="panelColumn">
+    <? foreach($pages as $id=>$page): ?>
+      <? if($i==2): ?>
+        <li class="mainCat">
+          <a href="/press" <?=($press?'class="active"' : '');?>>Press</a>
+        </li>
+      <? endif; ?>
+        <li class="mainCat">
+          <a href="<? echo vae_permalink($id); ?>" class="<?=( $id == $_REQUEST['id'] ? 'active' : '' );?>"><? echo $page->title; ?></a>
+        </li>
+        <? $i++; ?>
+    <? endforeach; ?>
+    </ul>
+    <div class="clear"></div>
+  </div><!-- panelAboutNav -->
+
+
+  <? elseif($_REQUEST['loc']=='shop'): ?>
+
+  <div id="panelShopNav">
+    <?
+      $cats = vae('/shop/categories[hide!=1]');
+
+      $perCol = 16;
+
+      $i=1;
+      $thisCol=$ind=0;
+      foreach($cats as $cat):
+        $catItemCount = (string)$cat->subcategories->count + 1;
+        if($thisCol == 0):
+          $results[$ind][] = (string)$cat->id;
+          $thisCol += $catItemCount;
+        elseif($thisCol < $perCol):
+          if($thisCol + $catItemCount > $perCol-$thisCol):
+            $ind++;
+            $thisCol = 0;
+            $results[$ind][] = (string)$cat->id;
+            $thisCol += $catItemCount;
+          else:
+            $results[$ind][] = (string)$cat->id;
+            $thisCol += $catItemCount;
+          endif;
+        elseif($thisCol >= $perCol):
+          $ind++;
+          $thisCol = 0;
+          $results[$ind][] = (string)$cat->id;
+          $thisCol += $catItemCount;
+        endif;
+        $i++;
+      endforeach;
+    ?>
+
+
+    <? $i=1; ?>
+    <? foreach($results as $column): ?>
+      <? $top = true; ?>
+      <? if($i==4): ?>
+      <ul class="panelColumn last">
+      <? else: ?>
+      <ul class="panelColumn">
+      <? endif; ?>
+        <? foreach($column as $catId): ?>
+          <? $cat = vae($catId); ?>
+          <? if($top): ?>
+          <li class="mainCat top">
+          <? else: ?>
+          <li class="mainCat">
+          <? endif; ?>
+            <a href="<? echo $cat->permalink; ?>"<? if($_REQUEST['id']==(string)$cat->id): ?> class="active"<? endif; ?>><? echo $cat->title; ?></a>
+          </li>
+          <? $top = false; ?>
+          <? if($cat->subcategories->count): ?>
+            <? foreach($cat->subcategories as $subcat): ?>
+              <li class="panelSubCat">
+                <a href="<? echo $subcat->permalink; ?>"<? if($_REQUEST['id']==(string)$subcat->id): ?> class="active"<? endif; ?>><? echo $subcat->title; ?></a>
+              </li>
+            <? endforeach; ?>
+          <? endif; ?>
+        <? endforeach; ?>
+      </ul>
+      <? $i++; ?>
+    <? endforeach; ?>
+
+    <div class="clear"></div>
+  </div><!-- panelShopNav -->
+
+  <? endif; ?>
